@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://localhost:7000/soap-server" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://localhost:7000/soap-server" targetNamespace="http://localhost:7000/soap-server">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://localhost:7000/soap-server">
+    <xs:element name="getSchoolRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getSchoolResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="school" type="tns:school"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="school">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="population" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getSchoolResponse">
+    <wsdl:part element="tns:getSchoolResponse" name="getSchoolResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSchoolRequest">
+    <wsdl:part element="tns:getSchoolRequest" name="getSchoolRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SchoolsPort">
+    <wsdl:operation name="getSchool">
+      <wsdl:input message="tns:getSchoolRequest" name="getSchoolRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getSchoolResponse" name="getSchoolResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SchoolsPortSoap11" type="tns:SchoolsPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getSchool">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="getSchoolRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getSchoolResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SchoolsPortService">
+    <wsdl:port binding="tns:SchoolsPortSoap11" name="SchoolsPortSoap11">
+      <soap:address location="http://localhost:9000/ws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
